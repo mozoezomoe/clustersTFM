@@ -15,18 +15,18 @@ library("igraph")
 library("tidygraph")
 library("ggraph")
 
-
-
-
-setwd("C:/Users/mexicore/Dropbox/Universidad_pasada/Máster/Asignaturas/TFM/Tablas")
+root <- "C:/Users/mexicore/Dropbox/Universidad_pasada/M?ster/Asignaturas/TFM/Tablas"
 
 # Data reading
 
-celpath = "C:/Users/mexicore/Dropbox/Universidad_pasada/Máster/Asignaturas/TFM/Datos/Archivos CEL/Q&R/Q&R-X-A/"
+# celpath = "C:/Users/mexicore/Dropbox/Universidad_pasada/M?ster/Asignaturas/TFM/Datos/Archivos CEL/Q&R/Q&R-X-A/"
 
+celpath = file.path(root, "cells")
 data = ReadAffy(celfile.path=celpath)
-
 ph <- data@phenoData
+
+data_name1 <- "Q-X-GL" 
+data_name2 <- "R-X-GL" 
 
 # Normalization
 
@@ -40,17 +40,17 @@ plotMDS(data.rma)
 
 for (i in 1:2)
 {
-  name = paste("Q-X-GL",i,".jpg",sep="")
+  name = paste(data_name1,i,".jpg",sep="")
   jpeg(name)
-  image(data[,i],main="Q-X-GL")
+  image(data[,i],main=data_name1)
   dev.off()
 }
 
 for (i in 3:4)
 {
-  name = paste("R-X-GL",i,".jpg",sep="")
+  name = paste(data_name2,i,".jpg",sep="")
   jpeg(name)
-  image(data[,i],main="R-X-GL")
+  image(data[,i],main=data_name2)
   dev.off()
 }
 
@@ -81,12 +81,12 @@ par(mfrow=c(1,2))
 boxplot(data,which='pm', names = c("Q1","Q2","R1","R2"),
         target='core', main="Q&R-X-Gl - Before normalization")
 
-### Después de normalización
+### After normalization
 boxplot(data.matrix,name = c("Q1","Q2","R1","R2"),main="Q&R-X-Gl - After normalization")
 
 ## Histogram
 
-### Antes de normalización
+### Antes de normalizaci?n
 hist(data,lwd=2,which='pm',ylab='Density',xlab='Log2 intensities', main='Q&R-X-Gl - Before normalization', 
      target='core')
 legend('topright',  legend=c("Q1","Q2","R1","R2"), col = c("green","blue","red","black") ,  lty=1, 
@@ -178,7 +178,7 @@ data.matrix.down = data.matrix[(rownames(topdowns)),]
 
 matrix <- data.frame(cbind(rownames(data.matrix),data.matrix))
 
-up.a.x<-read_excel("C:/Users/mexicore/Dropbox/Universidad_pasada/Máster/Asignaturas/TFM/Tablas/Genes_TFM.xlsx", 
+up.a.x<-read_excel("C:/Users/mexicore/Dropbox/Universidad_pasada/M?ster/Asignaturas/TFM/Tablas/Genes_TFM.xlsx", 
                     sheet="UP-X-A-CRP")
 
 Dt1 <- data.table(up.a.x, key ="Column.ID")
@@ -245,8 +245,8 @@ fviz_cluster(object = pam_clusters, data = cluster.up1, ellipse.type = "t",
 set.seed(123)
 hc_euclidea_completo <- hclust(d = dist(x = cluster.up1, method = "euclidean"),
                                method = "complete")
-fviz_dend(x = hc_euclidea_completo, cex = 0.5, main = "Clustering jerárquico por linkage completo - Regulados positivamente X-A",
-          sub = "Distancia euclídea", k= 4, rect = TRUE) +
+fviz_dend(x = hc_euclidea_completo, cex = 0.5, main = "Clustering jer?rquico por linkage completo - Regulados positivamente X-A",
+          sub = "Distancia eucl?dea", k= 4, rect = TRUE) +
   theme(plot.title =  element_text(hjust = 0.5, size = 15))
 
 # Plotting
